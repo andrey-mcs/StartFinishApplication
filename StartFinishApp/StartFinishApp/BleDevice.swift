@@ -22,6 +22,11 @@ class BleDevice : NSObject, CBPeripheralDelegate
     
     var UnixTimeChar : CBCharacteristic?
     
+    var TimeStart : CBCharacteristic?
+    var TimeFinish : CBCharacteristic?
+    var TimeResult : CBCharacteristic?
+    var IdSkier : CBCharacteristic?
+    
     init(peripheral : CBPeripheral, RSSINumber : NSNumber)
     {
         self.peripheral = peripheral
@@ -35,20 +40,40 @@ class BleDevice : NSObject, CBPeripheralDelegate
         for service in peripheral.services!
         {
             print ("Found Service \(service)")
+            peripheral.discoverCharacteristics(nil, for: service)
         }
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?)
     {
-        for i in service.characteristics!
+        for characteristic in service.characteristics!
         {
-            print ("Found Characteristic \(i)")
+            print ("Found Characteristic \(characteristic)")
+            switch characteristic.uuid {
+            case CBUUID(string: CBUUIDs.ID_UUID) :
+                IdSkier = characteristic
+            case CBUUID(string: CBUUIDs.timeStart) :
+                TimeStart = characteristic
+            case CBUUID(string: CBUUIDs.timeFinish) :
+                TimeFinish = characteristic
+            case CBUUID(string: CBUUIDs.timeResult) :
+                TimeResult = characteristic
+            default:
+                print("0")
+            }
         }
+        
+        if ((IdSkier != nil ) && (TimeStart != nil) && (TimeFinish != nil) && (TimeResult != nil))
+        {
+            NotificationCenter.default.post(name: RCNotifications.AllSkierCharacterisrticDiscovered, object: nil)
+        }
+
     }
+    
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?)
     {
-        print("Update Value for Characterictic")
+        print("Update Value for Characterictic\(characteristic)")
     }
     
     

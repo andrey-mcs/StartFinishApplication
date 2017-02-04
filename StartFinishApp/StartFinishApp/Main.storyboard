@@ -104,8 +104,8 @@
                                 <color key="tintColor" red="1" green="0.0" blue="0.63037923579999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Manage Device"/>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name Device:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qfh-Xl-HnM">
-                                <rect key="frame" x="110" y="84" width="155.5" height="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Device name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qfh-Xl-HnM">
+                                <rect key="frame" x="112" y="84" width="151.5" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <color key="textColor" red="0.32756474582046236" green="0.2256767451261682" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -185,10 +185,10 @@
             </objects>
             <point key="canvasLocation" x="3225" y="67"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Manage Device Controller-->
         <scene sceneID="xx4-db-kGI">
             <objects>
-                <tabBarController id="Va0-Qt-Hb9" sceneMemberID="viewController">
+                <tabBarController id="Va0-Qt-Hb9" customClass="ManageDeviceController" customModule="StartFinishApp" customModuleProvider="target" sceneMemberID="viewController">
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="b0C-HM-iFv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>

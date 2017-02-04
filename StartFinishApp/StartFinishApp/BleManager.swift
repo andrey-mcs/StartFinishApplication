@@ -52,6 +52,7 @@ class BleManager : NSObject, CBCentralManagerDelegate
             print("Find new service, Periph: \(peripheral.identifier), \(peripheral.name!) ,RSSI : \(RSSI)")
             let tmpDevice = BleDevice(peripheral: peripheral, RSSINumber: RSSI)
             listPeriphs.append(tmpDevice)
+            
             NotificationCenter.default.post(name: RCNotifications.FoundDevice, object: nil)
         }
         
@@ -68,6 +69,7 @@ class BleManager : NSObject, CBCentralManagerDelegate
     {
         listPeriphs[searchDevices(peripheral: peripheral)!].StatusConnection = .Connected
         print("Connected")
+        peripheral.discoverServices(nil)
         NotificationCenter.default.post(name: RCNotifications.ConnectedDevice, object: nil)
     }
     
