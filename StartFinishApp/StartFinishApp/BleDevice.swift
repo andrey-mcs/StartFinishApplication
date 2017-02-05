@@ -70,6 +70,25 @@ class BleDevice : NSObject, CBPeripheralDelegate
 
     }
     
+    func allCharacteristicDiscover() -> Bool
+    {
+        if ((IdSkier != nil ) && (TimeStart != nil) && (TimeFinish != nil) && (TimeResult != nil))
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
+    }
+    
+    func clearCharacteristics()
+    {
+        IdSkier = nil
+        TimeStart = nil
+        TimeFinish = nil
+        TimeResult = nil
+    }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?)
     {

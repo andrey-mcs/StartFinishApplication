@@ -77,47 +77,44 @@ class ConnectToBleController : UIViewController
             self.navigationItem.hidesBackButton = true
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "List Devices", style: .plain, target: self, action : #selector(goBackToTable(sender:)))
             
-            NotificationCenter.default.addObserver(forName: RCNotifications.ConnectedDevice , object: nil, queue: OperationQueue.main)
-            { _ in
-                self.StateBle.text = "Connected"
-                self.StateBle.textColor = UIColor.green
-                self.ManageButton.isEnabled = true
-                self.DisconnectButton.isEnabled = true
-                self.ConnectButton.isEnabled = false
-                
-                self.ConnectionTimer.invalidate()
-                self.MessageFrame.removeFromSuperview()
-                
-                self.RSSIRefreshTimer = Timer.scheduledTimer(timeInterval: 0.5 , target: self, selector: #selector(self.actionRefreshRSSI), userInfo: nil, repeats: true)
-                self.DiscAfterDismiss = false
-
-            }
-
-            NotificationCenter.default.addObserver(forName: RCNotifications.DisconnectedDevice , object: nil, queue: OperationQueue.main)
-            { _ in
-                self.StateBle.text = "Disconnected"
-                self.StateBle.textColor = UIColor.red
-                self.ManageButton.isEnabled = false
-                self.DisconnectButton.isEnabled = false
-                
-                (self.DiscAfterDismiss == true) ? (self.ConnectButton.isEnabled = false) : (self.ConnectButton.isEnabled = true)
-                
-                if self.RSSIRefreshTimer != nil
-                {
-                    self.RSSIRefreshTimer.invalidate()
-                }
-                
-            }
-
-            NotificationCenter.default.addObserver(forName: RCNotifications.ReadedRSSI , object: nil, queue: OperationQueue.main)
-            { _ in
-                self.RssiBle.text = "\(self.DetailViewDevice.RSSI)"
-            }
-            
         }
-        
         print("ConnectToBleController : Init")
         
+    }
+    
+    func ConnectedDeviceObserver(notification : Notification)
+    {
+        self.StateBle.text = "Connected"
+        self.StateBle.textColor = UIColor.green
+        self.ManageButton.isEnabled = true
+        self.DisconnectButton.isEnabled = true
+        self.ConnectButton.isEnabled = false
+        
+        self.ConnectionTimer.invalidate()
+        self.MessageFrame.removeFromSuperview()
+        
+        self.RSSIRefreshTimer = Timer.scheduledTimer(timeInterval: 0.5 , target: self, selector: #selector(self.actionRefreshRSSI), userInfo: nil, repeats: true)
+        self.DiscAfterDismiss = false
+    }
+    
+    func DisconnectedDeviceObserver(notification: Notification)
+    {
+        self.StateBle.text = "Disconnected"
+        self.StateBle.textColor = UIColor.red
+        self.ManageButton.isEnabled = false
+        self.DisconnectButton.isEnabled = false
+        
+        (self.DiscAfterDismiss == true) ? (self.ConnectButton.isEnabled = false) : (self.ConnectButton.isEnabled = true)
+        
+        if self.RSSIRefreshTimer != nil
+        {
+            self.RSSIRefreshTimer.invalidate()
+        }
+    }
+    
+    func ReadedRSSI(notification: Notification)
+    {
+        self.RssiBle.text = "\(self.DetailViewDevice.RSSI)"
     }
     
     func progressBarDisplayer(msg:String, _ indicator:Bool ) {
@@ -143,10 +140,22 @@ class ConnectToBleController : UIViewController
         if DetailViewDevice.StatusConnection == .Connected
         {
             self.RSSIRefreshTimer = Timer.scheduledTimer(timeInterval: 0.5 , target: self, selector: #selector(self.actionRefreshRSSI), userInfo: nil, repeats: true)
+        }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.ConnectedDeviceObserver(notification:)), name: RCNotifications.ConnectedDevice, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.DisconnectedDeviceObserver(notification:)), name: RCNotifications.DisconnectedDevice, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.ReadedRSSI(notification:)), name: RCNotifications.ReadedRSSI, object: nil)
 
+    }
+    override func prepare(for segue : UIStoryboardSegue, sender : Any?)
+    {
+        if let Destination = segue.destination as? ManageDeviceController
+        {
+            Destination.ManageDev = self.DetailViewDevice
         }
     }
-    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
@@ -154,7 +163,7 @@ class ConnectToBleController : UIViewController
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        
+        NotificationCenter.default.removeObserver(self)
     }
 
     

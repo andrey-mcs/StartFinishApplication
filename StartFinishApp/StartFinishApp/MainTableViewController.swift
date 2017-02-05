@@ -22,10 +22,10 @@ class MainTableViewController: UITableViewController
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        NotificationCenter.default.addObserver(forName: RCNotifications.FoundDevice, object: nil , queue: OperationQueue.main)
-        {
-            _ in self.tableView.reloadData()
-        }
+        //NotificationCenter.default.addObserver(forName: RCNotifications.FoundDevice, object: self.BLETable , queue: OperationQueue.main)
+        //{
+        //    _ in self.tableView.reloadData()
+        //}
         
         BLE.startUpCentralManager()
         
@@ -35,11 +35,25 @@ class MainTableViewController: UITableViewController
         print ("BLERefresh Goes")
         BLETable.addSubview(BLERefresh)
     }
+
+    
+    
+    func FoundDeviceObserver(notification: Notification)
+    {
+        self.tableView.reloadData()
+
+    }
     
     override func viewDidAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(FoundDeviceObserver(notification:)), name: RCNotifications.FoundDevice, object: nil)
         BLE = BleManager()
         BLE.startUpCentralManager()
+        BLETable.reloadData()
         super.viewDidAppear(true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func didReceiveMemoryWarning()
