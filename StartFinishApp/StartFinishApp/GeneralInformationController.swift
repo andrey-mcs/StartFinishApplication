@@ -28,18 +28,11 @@ class GeneralInformationController : UIViewController
     {
         super.viewDidLoad()
        NotificationCenter.default.addObserver(self, selector: #selector(self.AllSkierCharacterisrticDiscoveredObserver(notification:)), name: RCNotifications.AllSkierCharacterisrticDiscovered, object: nil)
-        if (Device.allCharacteristicSetted() != true)
-        {
-            self.StartTimeData.text = "Unknown Time"
-            self.FinishTimeData.text = "Unknown Time"
-            self.ResultTimeData.text = "Unknown Time"
-        }
-        else
-        {
-            self.StartTimeData.text = "00:00:000"
-            self.FinishTimeData.text = "00:00:000"
-            self.ResultTimeData.text = "00:00:000"
-        }
+//        if (Device.allCharacteristicSetted() != true)
+//        {
+            self.StartTimeData.text = "--:--:--"
+            self.FinishTimeData.text = "--:--:--"
+            self.ResultTimeData.text = "--:--:--"
 
         print("Hehe")
         NotificationCenter.default.addObserver(self, selector: #selector(DisconnectedDeviceObserver(notification:)), name: RCNotifications.DisconnectedDevice, object: nil)
@@ -62,6 +55,9 @@ class GeneralInformationController : UIViewController
         NotificationCenter.default.addObserver(self, selector: #selector(TimeSkierArrivedObserver(notification:)), name: RCNotifications.TimeSkierArrived, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(TimeStartArrivedObserver(notification:)), name: RCNotifications.TimeStartArrived, object: nil)
+        self.StartTimeData.text = "--:--:--"
+        self.FinishTimeData.text = "--:--:--"
+        self.ResultTimeData.text = "--:--:--"
 
     }
     
@@ -120,7 +116,7 @@ class GeneralInformationController : UIViewController
         //textViewSecFinish.setText(String.format("%02d", currentSec));
         //textViewMsFinish.setText(String.format("%03d", currentMs));
         
-        print("\(tmpTime[0]):\(tmpTime[1]):\(tmpTime[2]):\(tmpTime[3])")
+        //print("\(tmpTime[0]):\(tmpTime[1]):\(tmpTime[2]):\(tmpTime[3])")
         
         self.FinishTimeData.text = String(format:"%02d:%02d:%02d:%03d", currentHour, currentMin, currentSec, currentMs)
         self.ResultTimeData.text = String(format:"%02d:%02d:%02d:%03d", tmpTime[0], tmpTime[1], tmpTime[2], tmpTime[3])
@@ -191,9 +187,9 @@ class GeneralInformationController : UIViewController
     func DisconnectedDeviceObserver(notification : Notification)
     {
         print("DiscDevice")
-        self.StartTimeData.text = "Unknown Time"
-        self.FinishTimeData.text = "Unknown Time"
-        self.ResultTimeData.text = "Unknown Time"
+        self.StartTimeData.text = "--:--:--"
+        self.FinishTimeData.text = "--:--:--"
+        self.ResultTimeData.text = "--:--:--"
         if (self.updaterTime != nil)
         {
             updaterTime.invalidate()

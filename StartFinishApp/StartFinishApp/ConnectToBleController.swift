@@ -16,6 +16,7 @@ class ConnectToBleController : UIViewController
     @IBOutlet weak var ConnectButton: UIButton!
     @IBOutlet weak var DisconnectButton: UIButton!
     @IBOutlet weak var ManageButton: UIButton!
+    @IBOutlet weak var ConnectionLevel: UIImageView!
     
     var MessageFrame = UIView()
     var MessageActivityIndicator = UIActivityIndicatorView()
@@ -46,6 +47,18 @@ class ConnectToBleController : UIViewController
             self.NameBle.textColor = UIColor.orange
             
             self.RssiBle.text = "\(DetailViewDevice.RSSI)"
+            
+            switch DetailViewDevice.RSSI.intValue {
+            case -54 ... 0:
+                ConnectionLevel.image = UIImage(named : "Net-3")
+            case -70 ... -55:
+                ConnectionLevel.image = UIImage(named : "Net-2")
+            case -150 ..< -70:
+                ConnectionLevel.image = UIImage(named : "Net-1")
+            default:
+                break
+            }
+            
             self.RssiBle.textColor = UIColor.purple
             
             switch(DetailViewDevice.StatusConnection)
@@ -110,11 +123,24 @@ class ConnectToBleController : UIViewController
         {
             self.RSSIRefreshTimer.invalidate()
         }
+        ConnectionLevel.image = UIImage(named : "Net-0")
+
     }
     
     func ReadedRSSI(notification: Notification)
     {
         self.RssiBle.text = "\(self.DetailViewDevice.RSSI)"
+        switch DetailViewDevice.RSSI.intValue {
+        case -54 ... 0:
+            ConnectionLevel.image = UIImage(named : "Net-3")
+        case -70 ... -55:
+            ConnectionLevel.image = UIImage(named : "Net-2")
+        case -150 ..< -70:
+            ConnectionLevel.image = UIImage(named : "Net-1")
+        default:
+            break
+        }
+
     }
     
     func progressBarDisplayer(msg:String, _ indicator:Bool ) {
