@@ -20,12 +20,15 @@ class BleDevice : NSObject, CBPeripheralDelegate
     var peripheral : CBPeripheral
     var RSSI : NSNumber
     
-    var UnixTimeChar : CBCharacteristic?
     
-    var TimeStart : CBCharacteristic?
-    var TimeFinish : CBCharacteristic?
-    var TimeResult : CBCharacteristic?
-    var IdSkier : CBCharacteristic?
+    private var TimeStart : CBCharacteristic?
+    private var TimeFinish : CBCharacteristic?
+    private var TimeResult : CBCharacteristic?
+    private var IdSkier : CBCharacteristic?
+    private var SystemStatus : CBCharacteristic?
+    private var unixTime : CBCharacteristic?
+    
+    
     
     init(peripheral : CBPeripheral, RSSINumber : NSNumber)
     {
@@ -48,49 +51,39 @@ class BleDevice : NSObject, CBPeripheralDelegate
     {
         for characteristic in service.characteristics!
         {
-            print ("Found Characteristic \(characteristic)")
+            //print ("Found Characteristic \(characteristic)")
             switch characteristic.uuid {
             case CBUUID(string: CBUUIDs.ID_UUID) :
                 IdSkier = characteristic
-                
-                peripheral.setNotifyValue(true, for: characteristic)
-                //peripheral.readValue(for: IdSkier!)
-                
-                print ("IdSkier : \(IdSkier!)")
-                
                 print ("\(characteristic.uuid) : idNotify -- \(characteristic.isNotifying)")
-                
-                //print("\(characteristic)")
-                
-                //if let data = characteristic.value
-                //{
-                //    var data = characteristic.value!
-                //    var bytes = Array(repeating : 0 as UInt8, count: 8)
-                //    data.copyBytes(to: &bytes, count: data.count)
-                //    let Data64 = bytes.map{UInt64($0)}
-                //    print ("Hmmm... 1: \(Data64[1]) 0: \(Data64[0])")
-                //}
-                
-                
             case CBUUID(string: CBUUIDs.timeStart) :
                 TimeStart = characteristic
-                peripheral.setNotifyValue(true, for: characteristic)
                 print ("\(characteristic.uuid) : idNotify -- \(characteristic.isNotifying)")
             case CBUUID(string: CBUUIDs.timeFinish) :
                 TimeFinish = characteristic
-                peripheral.setNotifyValue(true, for: characteristic)
                 print ("\(characteristic.uuid) : idNotify -- \(characteristic.isNotifying)")
            case CBUUID(string: CBUUIDs.timeResult) :
                 TimeResult = characteristic
-                peripheral.setNotifyValue(true, for: characteristic)
+                print ("\(characteristic.uuid) : idNotify -- \(characteristic.isNotifying)")
+            case CBUUID(string: CBUUIDs.systemStatus) :
+                SystemStatus = characteristic
+                print ("\(characteristic.uuid) : idNotify -- \(characteristic.isNotifying)")
+            case CBUUID(string: CBUUIDs.sfUnixTime) :
+                unixTime = characteristic
                 print ("\(characteristic.uuid) : idNotify -- \(characteristic.isNotifying)")
             default:
                 print("0")
             }
         }
         
-        if ((IdSkier != nil ) && (TimeStart != nil) && (TimeFinish != nil) && (TimeResult != nil))
+        if ((IdSkier != nil ) && (TimeStart != nil) && (TimeFinish != nil) && (TimeResult != nil) &&
+            (SystemStatus != nil) && (unixTime != nil))
         {
+            peripheral.setNotifyValue(true, for: IdSkier!)
+            peripheral.setNotifyValue(true, for: TimeStart!)
+            peripheral.setNotifyValue(true, for: TimeFinish!)
+            peripheral.setNotifyValue(true, for: TimeResult!)
+            peripheral.setNotifyValue(true, for: SystemStatus!)
             NotificationCenter.default.post(name: RCNotifications.AllSkierCharacterisrticDiscovered, object: nil)
         }
 
@@ -115,14 +108,39 @@ class BleDevice : NSObject, CBPeripheralDelegate
         TimeFinish = nil
         TimeResult = nil
     }
-    var x = 0
+    
+    func unregisterNotify()
+    {
+
+        if IdSkier != nil
+        {
+            peripheral.setNotifyValue(false, for: IdSkier!)
+        }
+        if TimeStart != nil
+        {
+            peripheral.setNotifyValue(false, for: TimeStart!)
+        }
+        if TimeFinish != nil
+        {
+            peripheral.setNotifyValue(false, for: TimeFinish!)
+        }
+        if TimeResult != nil
+        {
+            peripheral.setNotifyValue(false, for: TimeResult!)
+        }
+        if SystemStatus != nil
+        {
+            peripheral.setNotifyValue(false, for: SystemStatus!)
+        }
+        if unixTime != nil
+        {
+            peripheral.setNotifyValue(false, for: unixTime!)
+        }
+    }
+
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?)
     {
-        if x <= 9
-        {
-            x = x + 1
-            print ("\(characteristic.uuid) : idNotify -- \(characteristic.isNotifying), x = \(x)")
-        }
+        print ("\(characteristic.uuid) : idNotify -- \(characteristic.isNotifying)")
         //print("Update Value for Characterictic\(characteristic)")
     }
     

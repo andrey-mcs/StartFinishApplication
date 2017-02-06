@@ -63,6 +63,7 @@ class BleManager : NSObject, CBCentralManagerDelegate
         listPeriphs[searchDevices(peripheral: peripheral)!].StatusConnection = .Disconnected
         print("Disconnected")
         listPeriphs[searchDevices(peripheral: peripheral)!].clearCharacteristics()
+        listPeriphs[searchDevices(peripheral: peripheral)!].unregisterNotify()
         BLE.centralManager.stopScan()
         NotificationCenter.default.post(name: RCNotifications.DisconnectedDevice, object: nil)
     }
