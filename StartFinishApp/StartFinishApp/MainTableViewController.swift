@@ -113,6 +113,7 @@ class MainTableViewController: UITableViewController
         }
         
         
+        /*
         if let destController = segue.destination as? GeneralInformationController
         {
             if let CallCell = sender as? UITableViewCell
@@ -122,6 +123,7 @@ class MainTableViewController: UITableViewController
                 //BLE.connectToDevice(peripheral: BLE.getDeviceForIndex(Index: CallCell.tag).peripheral)
             }
         }
+        */
     }
     
     func BLErefresh(sender:AnyObject) {

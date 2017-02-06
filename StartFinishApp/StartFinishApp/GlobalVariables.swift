@@ -15,6 +15,7 @@ struct RCNotifications
     static let DisconnectedDevice = Notification.Name("com.atkachov.StartFinishApp.disconnecteddevice")
     static let ReadedRSSI = Notification.Name("com.atkachov.StartFinishApp.readedrssi")
     static let AllSkierCharacterisrticDiscovered = Notification.Name("com.atkachov.StartFinishApp.SkierCharDisc")
+    static let TimeSkierArrived = Notification.Name("com.atkachov.StartFinishApp.SkierTimeArrived")
 }
 
 struct CBUUIDs {

@@ -19,9 +19,10 @@ class ManageDeviceController : UITabBarController
     
     var ManageDev : BleDevice!
     
+    
     override func viewDidLoad() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.AllSkierCharacterisrticDiscoveredObserver(notification:)), name: RCNotifications.AllSkierCharacterisrticDiscovered, object: nil)
-        if (ManageDev.allCharacteristicDiscover() != true)
+        if (ManageDev.allCharacteristicSetted() != true)
         {
             progressBarDisplayer(msg: "Syncing", true)
         }
@@ -30,12 +31,24 @@ class ManageDeviceController : UITabBarController
             print ("All Discovered")
         }
         
+        var tmpVal = self.viewControllers?[0]
+        if var SelectedView = tmpVal! as? GeneralInformationController
+        {
+            SelectedView.Device = ManageDev
+        }
+        
+        //if var SelectedView = tmpVal!
+        
         ReconnectTimer = Timer()
+        
+        
     }
 
     override func viewDidAppear(_ animated: Bool) {
         NotificationCenter.default.addObserver(self, selector: #selector(DisconnectedDeviceObserver(notification:)), name: RCNotifications.DisconnectedDevice, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ConnectedDeviceObserver(notification:)), name: RCNotifications.ConnectedDevice, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TimeSkierArrivedObserver(notification:)), name: RCNotifications.TimeSkierArrived, object: nil)
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -47,14 +60,21 @@ class ManageDeviceController : UITabBarController
         
     }
     
+    func TimeSkierArrivedObserver( notification : Notification)
+    {
+        //SelectedView.StartTimeData.text = ""
+        //SelectedView.FinishTimeData.text = ""
+        //SelectedView.ResultTimeData.text = ""
+    }
+    
     func AllSkierCharacterisrticDiscoveredObserver ( notification : Notification)
     {
         MessageFrame.removeFromSuperview()
-        print ("Hahaha")
     }
     
     func DisconnectedDeviceObserver(notification : Notification)
     {
+        MessageFrame.removeFromSuperview()
         progressBarDisplayer(msg: "Reconnecting", true)
         ReconnectTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(timeOutReconnect), userInfo: nil, repeats: false)
         BLE.connectToDevice(peripheral: ManageDev.peripheral)
@@ -77,6 +97,11 @@ class ManageDeviceController : UITabBarController
         let errorReconnect = UIAlertController(title: "Reconnection Error", message: "Please refresh list and try connect again!", preferredStyle: UIAlertControllerStyle.alert)
         errorReconnect.addAction(UIAlertAction(title: "Retry" , style: UIAlertActionStyle.default, handler: self.ErrorReconnect))
         self.present(errorReconnect, animated: true, completion: nil)
+    }
+    
+    override func prepare(for segue : UIStoryboardSegue, sender : Any?)
+    {
+        print("Item Tab Bar")
     }
     
     func ErrorReconnect(alert : UIAlertAction!)
