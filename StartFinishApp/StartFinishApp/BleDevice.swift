@@ -189,13 +189,6 @@ class BleDevice : NSObject, CBPeripheralDelegate
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?)
     {
         //print ("\(characteristic)")
-        if ((IdSkierData != nil ) && (TimeStartData.count > 0) && (TimeFinishData.count > 0) && (TimeResultData.count > 0) && (SystemStatusData.count > 0)
-            //&& (unixTimeData != nil)
-            && (numSkierOnWay != nil) && (maxSkierOnWay != nil) && (Notify == false))
-        {
-            Notify = true
-            NotificationCenter.default.post(name: RCNotifications.AllSkierCharacterisrticDiscovered, object: nil)
-        }
         
         // hour 0 min 1 sec 2 ms 3
         if (characteristic.value != nil)
@@ -206,7 +199,7 @@ class BleDevice : NSObject, CBPeripheralDelegate
                     var tmpId : UInt16 = 0
                     (characteristic.value! as NSData).getBytes(&tmpId, range: NSRange(location: 0, length: 2))
                     IdSkierData = UInt32(tmpId)
-                    print("Id = \(IdSkierData!)")
+                    //print("Id = \(IdSkierData!)")
                 case CBUUID( string: CBUUIDs.timeStart):
 
                     var Hour : UInt16 = 0
@@ -229,6 +222,9 @@ class BleDevice : NSObject, CBPeripheralDelegate
                     TimeStartData[1] = (UInt32(Min))
                     TimeStartData[2] = (UInt32(Sec))
                     TimeStartData[3] = (UInt32(Ms))
+                    
+                    NotificationCenter.default.post(name: RCNotifications.TimeStartArrived, object: nil)
+
                     
                     print (String(format: "Start: %02d:%02d:%02d:%03d", Hour, Min, Sec, Ms))
           
@@ -280,7 +276,10 @@ class BleDevice : NSObject, CBPeripheralDelegate
                     TimeResultData[3] = (UInt32(Ms))
                 
                     print (String(format: "Result: %02d:%02d:%02d:%03d", Hour, Min, Sec, Ms))
-                    NotificationCenter.default.post(name: RCNotifications.TimeSkierArrived, object: nil)
+                    if ((TimeStartData.count == 4) && (TimeFinishData.count == 4))
+                    {
+                        NotificationCenter.default.post(name: RCNotifications.TimeSkierArrived, object: nil)
+                    }
 
                 case CBUUID( string: CBUUIDs.systemStatus):
 
@@ -317,6 +316,16 @@ class BleDevice : NSObject, CBPeripheralDelegate
             }
         
         }
+        
+        if ((IdSkierData != nil ) && (TimeStartData.count > 0) && (TimeFinishData.count > 0) && (TimeResultData.count > 0) && (SystemStatusData.count > 0)
+            //&& (unixTimeData != nil)
+            && (numSkierOnWay != nil) && (maxSkierOnWay != nil) && (Notify == false))
+        {
+            Notify = true
+            print("BLE: All Discovered")
+            NotificationCenter.default.post(name: RCNotifications.AllSkierCharacterisrticDiscovered, object: nil)
+        }
+
         //print("Update Value for Characterictic\(characteristic)")
     }
     

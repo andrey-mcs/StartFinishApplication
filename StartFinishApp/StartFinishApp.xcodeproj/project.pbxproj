@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		55862AB21E410FB3005F0D3F /* ConnectToBleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55862AB11E410FB3005F0D3F /* ConnectToBleController.swift */; };
 		55862AB41E467CF4005F0D3F /* ManageDeviceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55862AB31E467CF4005F0D3F /* ManageDeviceController.swift */; };
+		55862AB61E48B85F005F0D3F /* TransitioningObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55862AB51E48B85F005F0D3F /* TransitioningObject.swift */; };
 		559CB3411E3FD1510005B86F /* GeneralInformationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559CB3401E3FD1510005B86F /* GeneralInformationController.swift */; };
 		8FB6B6DC1E3E8778001396E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB6B6DB1E3E8778001396E6 /* AppDelegate.swift */; };
 		8FB6B6DE1E3E8778001396E6 /* MainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB6B6DD1E3E8778001396E6 /* MainTableViewController.swift */; };
@@ -42,6 +43,7 @@
 /* Begin PBXFileReference section */
 		55862AB11E410FB3005F0D3F /* ConnectToBleController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectToBleController.swift; sourceTree = "<group>"; };
 		55862AB31E467CF4005F0D3F /* ManageDeviceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageDeviceController.swift; sourceTree = "<group>"; };
+		55862AB51E48B85F005F0D3F /* TransitioningObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransitioningObject.swift; path = ../TransitioningObject.swift; sourceTree = "<group>"; };
 		559CB3401E3FD1510005B86F /* GeneralInformationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralInformationController.swift; sourceTree = "<group>"; };
 		8FB6B6D81E3E8778001396E6 /* StartFinishApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StartFinishApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FB6B6DB1E3E8778001396E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 		8FB6B6DA1E3E8778001396E6 /* StartFinishApp */ = {
 			isa = PBXGroup;
 			children = (
+				55862AB51E48B85F005F0D3F /* TransitioningObject.swift */,
 				8FB6B70B1E3E8A45001396E6 /* Launch Screen.storyboard */,
 				8FB6B6DB1E3E8778001396E6 /* AppDelegate.swift */,
 				8FB6B6DD1E3E8778001396E6 /* MainTableViewController.swift */,
@@ -284,6 +287,7 @@
 				559CB3411E3FD1510005B86F /* GeneralInformationController.swift in Sources */,
 				55862AB41E467CF4005F0D3F /* ManageDeviceController.swift in Sources */,
 				8FB6B6DE1E3E8778001396E6 /* MainTableViewController.swift in Sources */,
+				55862AB61E48B85F005F0D3F /* TransitioningObject.swift in Sources */,
 				8FB6B6DC1E3E8778001396E6 /* AppDelegate.swift in Sources */,
 				55862AB21E410FB3005F0D3F /* ConnectToBleController.swift in Sources */,
 			);

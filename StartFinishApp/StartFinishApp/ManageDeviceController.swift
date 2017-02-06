@@ -8,7 +8,27 @@
 
 import UIKit
 
-class ManageDeviceController : UITabBarController
+
+/*
+extension ManageDeviceController {
+    public func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+        
+        let fromView: UIView = tabBarController.selectedViewController!.view
+        let toView  : UIView = viewController.view
+        if fromView == toView {
+            return false
+        }
+        
+        UIView.transition(from: fromView, to: toView, duration: 0.3, options: UIViewAnimationOptions.transitionCrossDissolve)
+            { (finished:Bool) in
+            }
+
+        return true
+    }
+}
+
+*/
+class ManageDeviceController : UITabBarController, UITabBarControllerDelegate
 {
     var MessageFrame = UIView()
     var MessageActivityIndicator = UIActivityIndicatorView()
@@ -21,6 +41,9 @@ class ManageDeviceController : UITabBarController
     
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        self.delegate = self
+        
         NotificationCenter.default.addObserver(self, selector: #selector(self.AllSkierCharacterisrticDiscoveredObserver(notification:)), name: RCNotifications.AllSkierCharacterisrticDiscovered, object: nil)
         if (ManageDev.allCharacteristicSetted() != true)
         {
@@ -31,18 +54,36 @@ class ManageDeviceController : UITabBarController
             print ("All Discovered")
         }
         
-        var tmpVal = self.viewControllers?[0]
-        if var SelectedView = tmpVal! as? GeneralInformationController
+        let tmpVal = self.viewControllers?[0]
+        if let SelectedView = tmpVal! as? GeneralInformationController
         {
             SelectedView.Device = ManageDev
         }
         
+        let selectedColor   = UIColor.blue
+        let unselectedColor = UIColor.white
+        
+        //UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: unselectedColor], for: .normal)
+        //UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: selectedColor], for: .selected)
+        //UITabBarItem.appearance().setTitleTextAttributes([NSBackgroundColorAttributeName: unselectedColor], for: .normal)
+        //UITabBarItem.appearance().setTitleTextAttributes([NSBackgroundColorAttributeName: selectedColor], for: .selected)
+        UITabBar.appearance().backgroundColor = unselectedColor
+        UITabBar.appearance().tintColor = selectedColor
         //if var SelectedView = tmpVal!
         
         ReconnectTimer = Timer()
         
-        
     }
+    
+    func tabBarController(_ tabBarController: UITabBarController, animationControllerForTransitionFrom fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        // just return the custom TransitioningObject object that conforms to UIViewControllerAnimatedTransitioning protocol
+        let animatedTransitioningObject = TransitioningObject()
+        return animatedTransitioningObject
+    }
+   
+    
+    
+    
 
     override func viewDidAppear(_ animated: Bool) {
         NotificationCenter.default.addObserver(self, selector: #selector(DisconnectedDeviceObserver(notification:)), name: RCNotifications.DisconnectedDevice, object: nil)
@@ -62,9 +103,7 @@ class ManageDeviceController : UITabBarController
     
     func TimeSkierArrivedObserver( notification : Notification)
     {
-        //SelectedView.StartTimeData.text = ""
-        //SelectedView.FinishTimeData.text = ""
-        //SelectedView.ResultTimeData.text = ""
+
     }
     
     func AllSkierCharacterisrticDiscoveredObserver ( notification : Notification)

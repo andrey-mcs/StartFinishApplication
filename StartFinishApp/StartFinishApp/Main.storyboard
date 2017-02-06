@@ -147,7 +147,7 @@
             </objects>
             <point key="canvasLocation" x="1208.8" y="393.55322338830587"/>
         </scene>
-        <!--Item 2-->
+        <!--Schedule-->
         <scene sceneID="yJg-zQ-D9N">
             <objects>
                 <viewController id="fTh-dk-Etx" sceneMemberID="viewController">
@@ -160,13 +160,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="feJ-cT-zYL"/>
+                    <tabBarItem key="tabBarItem" title="Schedule" image="TabBarSchedule" id="feJ-cT-zYL"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tQ2-AX-aIc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3225" y="720"/>
         </scene>
-        <!--Item 1-->
+        <!--Home-->
         <scene sceneID="Of1-Fx-14Q">
             <objects>
                 <viewController id="p0c-Bx-q9T" customClass="GeneralInformationController" customModule="StartFinishApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -181,7 +181,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Start Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MPe-Bl-Nne">
                                 <rect key="frame" x="134" y="88" width="107" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="1" green="0.07703279364" blue="0.037309409889999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h6G-A5-okc">
@@ -193,7 +193,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Finish Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JLB-19-smd">
                                 <rect key="frame" x="64" y="191" width="246" height="27"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="1" green="0.07703279364" blue="0.037309409889999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zvo-FZ-k72">
@@ -205,7 +205,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Result" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ALC-He-pB1">
                                 <rect key="frame" x="86" y="287" width="201" height="27"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="1" green="0.07703279364" blue="0.037309409889999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WJA-ur-poR">
@@ -231,7 +231,7 @@
                             <constraint firstItem="WJA-ur-poR" firstAttribute="centerX" secondItem="C6M-hz-fX2" secondAttribute="centerX" id="tX4-j3-nlM"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="PXS-gU-FkZ"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="TabBarHome" selectedImage="TabBarHome" id="PXS-gU-FkZ"/>
                     <connections>
                         <outlet property="FinishTimeData" destination="zvo-FZ-k72" id="1j1-VG-Xtk"/>
                         <outlet property="FinishTimeLabel" destination="JLB-19-smd" id="Wcf-CQ-6Yt"/>
@@ -253,6 +253,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.94430744389999999" green="0.98069138600000005" blue="0.018585418489999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="p0c-Bx-q9T" kind="relationship" relationship="viewControllers" id="kcc-tI-1ET"/>
@@ -282,4 +283,8 @@
             <point key="canvasLocation" x="-596" y="393.55322338830587"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="TabBarHome" width="30" height="30"/>
+        <image name="TabBarSchedule" width="38" height="40"/>
+    </resources>
 </document>
