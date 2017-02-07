@@ -169,7 +169,11 @@ class ManageDeviceController : UITabBarController, UITabBarControllerDelegate
         view.addSubview(MessageFrame)
     }
     
-    
+    // Delegate method
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        print("Should select viewController: \(viewController.title) ?")
+        return true;
+    }
     
     func setupSwipeGestureRecognizers(allowCyclingThoughTabs cycleThroughTabs: Bool = false) {
         let swipeLeftGestureRecognizer = UISwipeGestureRecognizer(target: self, action: cycleThroughTabs ? #selector(self.handleSwipeLeftAllowingCyclingThroughTabs) : #selector(handleSwipeLeft))

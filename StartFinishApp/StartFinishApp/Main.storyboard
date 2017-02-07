@@ -276,9 +276,13 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="snA-UB-6AI" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="diM-pj-mBB">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="diM-pj-mBB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="0.40617591139999998" green="0.56774610280000004" blue="0.74813002350000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
